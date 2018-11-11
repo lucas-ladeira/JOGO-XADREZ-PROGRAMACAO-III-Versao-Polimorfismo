@@ -2,7 +2,7 @@
 TARGET = a.out
 CXX = g++
 CXXFLAGS = 
-DEPS = $(wildcard *.h)
+DEPS = $(wildcard *.h) $(wildcard *.hpp)
 OBJS = $(patsubst %.cpp, %.o, $(wildcard *.cpp))
 
 .PHONY: all

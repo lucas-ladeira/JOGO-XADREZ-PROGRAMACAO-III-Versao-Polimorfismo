@@ -18,9 +18,12 @@ public:
 	//incializando pecas no tabuleiro
 	Tabuleiro();
 
-	std::string getMatriz(int lin, int col) {return _matriz[lin][col];}
+	bool ehReiPreto(Peca *p) { return p == &_rei_preto; }
+	bool ehReiBranco(Peca *p) { return p == &_rei_branco; }
 
-	void setMatriz(int lin, int col, const std::string& pec) {_matriz[lin][col] = pec;}
+	Peca *getMatriz(int lin, int col) const {return _matriz[lin][col];}
+
+	void setMatriz(int lin, int col, Peca *pec) {_matriz[lin][col] = pec;}
 
 	int switch_para_letra(char letra)
 	{
@@ -133,8 +136,8 @@ public:
    	  					else _peoes_brancos[numero].set_duas_vezes_false();
 
 						setMatriz(linha_final, coluna_final, getMatriz(_peoes_brancos[numero].get_linha_atual(), _peoes_brancos[numero].get_coluna_atual()));
-            			setMatriz(_peoes_brancos[numero].get_linha_atual(), _peoes_brancos[numero].get_coluna_atual(), "0");
-            			setMatriz(_peoes_pretos[numero_anterior].get_linha_atual(), _peoes_pretos[numero_anterior].get_coluna_atual(), "0");
+            			setMatriz(_peoes_brancos[numero].get_linha_atual(), _peoes_brancos[numero].get_coluna_atual(), nullptr);
+            			setMatriz(_peoes_pretos[numero_anterior].get_linha_atual(), _peoes_pretos[numero_anterior].get_coluna_atual(), nullptr);
             			_peoes_brancos[numero].inicializa_posicao(linha_final, coluna_final);
            				_peoes_brancos[numero].incremento_nJogadas();            
 						return true;
@@ -152,8 +155,8 @@ public:
    	  					else _peoes_pretos[numero].set_duas_vezes_false();
 
 						setMatriz(linha_final, coluna_final, getMatriz(_peoes_pretos[numero].get_linha_atual(), _peoes_pretos[numero].get_coluna_atual()));
-            			setMatriz(_peoes_pretos[numero].get_linha_atual(), _peoes_pretos[numero].get_coluna_atual(), "0");
-            			setMatriz(_peoes_brancos[numero_anterior].get_linha_atual(), _peoes_brancos[numero_anterior].get_coluna_atual(), "0");
+            			setMatriz(_peoes_pretos[numero].get_linha_atual(), _peoes_pretos[numero].get_coluna_atual(), nullptr);
+            			setMatriz(_peoes_brancos[numero_anterior].get_linha_atual(), _peoes_brancos[numero_anterior].get_coluna_atual(), nullptr);
             			_peoes_pretos[numero].inicializa_posicao(linha_final, coluna_final);
            				_peoes_pretos[numero].incremento_nJogadas();            
 						return true;
@@ -185,7 +188,7 @@ public:
 
 private:
 	//matriz = tabuleiro
-	std::string _matriz[8][8]; // "_" significa privado
+	Peca *_matriz[8][8]; // "_" significa privado
 
 	std::vector<std::string> historico_jogadas; //armazena o historico de jogadas
 

@@ -16,6 +16,12 @@ public:
 	 *		Retorna um valor logico (true ou false) informando se a jogada solicitada eh valida.
 	 */
 	bool verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro);
+
+	std::string retornaString() override { 
+
+		if(getCor() == 'P') return "\u265E";
+		else return "\u2658"; 
+	}
 };
 
 #endif

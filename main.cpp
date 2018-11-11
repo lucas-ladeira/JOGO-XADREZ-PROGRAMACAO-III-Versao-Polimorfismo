@@ -14,7 +14,7 @@ using namespace std;
 
 enum{jogo_via_arquivo, via_terminal};
 void carrega_dados( vector<string> &jogadas_times, char *argv[] );
-void decodifica_main(Tabuleiro &t, string jogadas_times, bool printar_caracteres_especiais, int posicao);
+void decodifica_main(Tabuleiro &t, string jogadas_times, int posicao);
 int switch_para_letra(char letra);
 int switch_para_numero(char numero);
 std::string switch_char_string(char letra);
@@ -24,9 +24,6 @@ int main( int argc, char *argv[] )
 {
 	// Parâmetros de entrada
 	bool tipo_leitura = via_terminal; //entrada manual ou por arquivo
-	static const bool printar_caracteres_especiais = false;
-
-
 
 	Tabuleiro t;
 
@@ -38,10 +35,10 @@ int main( int argc, char *argv[] )
 
 		for(unsigned int i=0; i<jogadas_times.size(); i++)
 		{
-			impressao(t, printar_caracteres_especiais);
-			decodifica_main(t, jogadas_times[i], printar_caracteres_especiais, i);
+			impressao(t);
+			decodifica_main(t, jogadas_times[i], i);
 		}
-		impressao(t, printar_caracteres_especiais);
+		impressao(t);
 	}
 
 	else
@@ -49,14 +46,14 @@ int main( int argc, char *argv[] )
 		int cont = 0;
 		for(;;)
 		{
-			impressao(t, printar_caracteres_especiais);
+			impressao(t);
 			if( cont%2 == 0 ) std::cout << "Entrada Time Branco: ";
 			else std::cout << "Entrada Time Preto: ";
 			std::string jogada;
 			std::cin >> jogada;
 			if(jogada == "fim") break;
 
-			decodifica_main(t, jogada, printar_caracteres_especiais, cont);
+			decodifica_main(t, jogada, cont);
 			cont++;
 		}
 	}
@@ -86,7 +83,7 @@ void carrega_dados( vector<string> &jogadas_times, char *argv[] )
 
 
 
-void decodifica_main(Tabuleiro &t, string jogadas_times, bool printar_caracteres_especiais, int posicao)
+void decodifica_main(Tabuleiro &t, string jogadas_times, int posicao)
 {
 	char cor_time;
 	if(posicao%2 == 0) cor_time = 'B';

@@ -13,7 +13,7 @@ bool Torre::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabule
 		if(peca_no_caminho(get_linha_atual(),get_coluna_atual(), get_coluna_atual(), pos_final_j, tabuleiro) == 0)
 		{
 			tabuleiro->setMatriz(pos_final_i, get_coluna_atual(), tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
-			tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
+			tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), nullptr);
 			inicializa_posicao(pos_final_i, pos_final_j);
 			incremento_nJogadas();
 			return true;
@@ -34,7 +34,7 @@ int Torre::peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, in
 
 		while(j > pos_final_j)
 		{			
-			if(tabuleiro->getMatriz(i, j) != "0")
+			if(tabuleiro->getMatriz(i, j) != nullptr)
 			{
 				return 1;//caso return 1 significa que tem peca
 			}
@@ -50,7 +50,7 @@ int Torre::peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, in
 
 		while(j < pos_final_j)
 		{			
-			if(tabuleiro->getMatriz(i, j) != "0")
+			if(tabuleiro->getMatriz(i, j) != nullptr)
 			{				
 				return 1;//caso return 1 significa que tem peca
 			}
@@ -66,7 +66,7 @@ int Torre::peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, in
 		int j = pos_atual_j;
 		while(i < pos_final_i)
 		{			
-			if(tabuleiro->getMatriz(i, j) != "0")
+			if(tabuleiro->getMatriz(i, j) != nullptr)
 			{
 				return 1;//caso return 1 significa que tem peca
 			}
@@ -81,7 +81,7 @@ int Torre::peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, in
 		int j = pos_atual_j;
 		while(i > pos_final_i)
 		{			
-			if(tabuleiro->getMatriz(i, j) != "0")
+			if(tabuleiro->getMatriz(i, j) != nullptr)
 			{
 				return 1;//caso return 1 significa que tem peca
 			}

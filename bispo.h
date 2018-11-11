@@ -3,24 +3,20 @@
 
 #include <iostream>
 #include <string>
+#include "peca.h"
 
 class Tabuleiro;
 
-class Bispo
+class Bispo:public Peca
 {
 
-public:
-
-	void inicializa_posicao(int pos_i, int pos_j);	
-
+public:	
 	//funcao responsavel por verificar se a jogada eh valida
 	bool verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro);
 	
 
 private:
-	int peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro);
-	int pos_atual_i;
-	int pos_atual_j; //posicao atual em i e j
+	int peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro);	
 };
 
 #endif

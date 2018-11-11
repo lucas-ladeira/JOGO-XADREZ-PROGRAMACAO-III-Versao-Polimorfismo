@@ -2,42 +2,32 @@
 #include "rei.h"
 #include "torre.h"
 
-class Torre;
-void Rei::inicializa_posicao(int pos_i, int pos_j)
-{
-	pos_atual_i = pos_i;
-	pos_atual_j = pos_j;
-	return;
-}
-
 bool Rei::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro)
 {
-	
-
 	if (tabuleiro->getMatriz(pos_final_i, pos_final_j) == "RP" || tabuleiro->getMatriz(pos_final_i, pos_final_j) == "RB" ) {return false;};//Condicao para o rei nao cpturar o outro rei
 	
 
-	if ((pos_atual_i -1 == pos_final_i && pos_atual_j == pos_final_j )|| ( pos_atual_i -1 == pos_final_i && pos_atual_j+1 == pos_final_j )|| (pos_atual_i -1 == pos_final_i && pos_atual_j-1 == pos_final_j)){
-			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-			tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+	if ((get_linha_atual() -1 == pos_final_i && get_coluna_atual() == pos_final_j )|| ( get_linha_atual() -1 == pos_final_i && get_coluna_atual()+1 == pos_final_j )|| (get_linha_atual() -1 == pos_final_i && get_coluna_atual()-1 == pos_final_j)){
+			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+			tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
 			inicializa_posicao(pos_final_i, pos_final_j);
-			nJogadas ++;
+			incremento_nJogadas();
 			return true;
 	}
 
-	if ((pos_atual_i +1 == pos_final_i && pos_atual_j+1 == pos_final_j ) || (pos_atual_i +1 == pos_final_i && pos_atual_j == pos_final_j) || (pos_atual_i +1 == pos_final_i && pos_atual_j-1 == pos_final_j)){
-			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-			tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+	if ((get_linha_atual() +1 == pos_final_i && get_coluna_atual()+1 == pos_final_j ) || (get_linha_atual() +1 == pos_final_i && get_coluna_atual() == pos_final_j) || (get_linha_atual() +1 == pos_final_i && get_coluna_atual()-1 == pos_final_j)){
+			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+			tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
 			inicializa_posicao(pos_final_i, pos_final_j);
-			nJogadas ++;
+			incremento_nJogadas();
 			return true;
 	}
 
-	if ((pos_atual_i == pos_final_i && pos_atual_j+1 == pos_final_j ) || (pos_atual_i == pos_final_i && pos_atual_j-1 == pos_final_j) ){
-			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-			tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+	if ((get_linha_atual() == pos_final_i && get_coluna_atual()+1 == pos_final_j ) || (get_linha_atual() == pos_final_i && get_coluna_atual()-1 == pos_final_j) ){
+			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+			tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
 			inicializa_posicao(pos_final_i, pos_final_j);
-			nJogadas ++;
+			incremento_nJogadas();
 	    	return true;
 	}
 	

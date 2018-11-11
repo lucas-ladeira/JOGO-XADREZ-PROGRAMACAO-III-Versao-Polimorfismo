@@ -4,26 +4,18 @@
 #include "torre.h"
 #include "tabuleiro.h"
 
-
-void Torre::inicializa_posicao(int pos_i, int pos_j)
-{
-	pos_atual_i = pos_i;
-	pos_atual_j = pos_j;
-	return;
-}
-
 bool Torre::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro)
 {
 	//verificando se caminho final eh valido
-	if( pos_atual_i == pos_final_i || pos_atual_j == pos_final_j ) // caso nao seja invalida a posicao
+	if( get_linha_atual() == pos_final_i || get_coluna_atual() == pos_final_j ) // caso nao seja invalida a posicao
 	{
 		//conferindo se tem alguma peca para capturar
-		if(peca_no_caminho(pos_atual_i,pos_atual_j, pos_final_i, pos_final_j, tabuleiro) == 0)
+		if(peca_no_caminho(get_linha_atual(),get_coluna_atual(), get_coluna_atual(), pos_final_j, tabuleiro) == 0)
 		{
-			tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-			tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+			tabuleiro->setMatriz(pos_final_i, get_coluna_atual(), tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+			tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
 			inicializa_posicao(pos_final_i, pos_final_j);
-			nJogadas++;
+			incremento_nJogadas();
 			return true;
 		}
 		return false;

@@ -6,61 +6,54 @@ using namespace std;
 #include "tabuleiro.h"
 #include "peao.h"
 
-void Peao::inicializa_posicao(int pos_i, int pos_j)
-{
-   pos_atual_i = pos_i;
-   pos_atual_j = pos_j;
-   return;
-}
-
 bool Peao::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro)
 {
 
-   char cor = tabuleiro->getMatriz(pos_atual_i, pos_atual_j).back();
+   char cor = tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()).back();
 
    //PEAO CAPTURA
-   if( tabuleiro->getMatriz(pos_final_i, pos_final_j)!="0" && tabuleiro->getMatriz(pos_final_i, pos_final_j).back()!=cor && abs(pos_final_i-pos_atual_i)==1 && abs(pos_final_j-pos_atual_j)==1 )
+   if( tabuleiro->getMatriz(pos_final_i, pos_final_j)!="0" && tabuleiro->getMatriz(pos_final_i, pos_final_j).back()!=cor && abs(pos_final_i-get_linha_atual())==1 && abs(pos_final_j-get_coluna_atual())==1 )
    {
-   	  if( abs(pos_final_i-pos_atual_i) == 2 ) duas_vezes = true;
+   	  if( abs(pos_final_i-get_linha_atual()) == 2 ) duas_vezes = true;
    	  else duas_vezes = false;
 
-      tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-      tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+      tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+      tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
       inicializa_posicao(pos_final_i, pos_final_j);
-      nJogadas++;
+      incremento_nJogadas();
       return true;
    }
 
    //PECAS PRETAS
    if(cor=='P')
    {
-      if( pos_final_i==pos_atual_i+1 && pos_atual_j==pos_final_j )
+      if( pos_final_i==get_linha_atual()+1 && get_coluna_atual()==pos_final_j )
       {
-         if(peca_no_caminho(pos_atual_i,pos_atual_j, pos_final_i, pos_final_j, tabuleiro) == 0)
+         if(peca_no_caminho(get_linha_atual(),get_coluna_atual(), pos_final_i, pos_final_j, tabuleiro) == 0)
          {
 
-         	if( abs(pos_final_i-pos_atual_i) == 2 ) duas_vezes = true;
+         	if( abs(pos_final_i-get_linha_atual()) == 2 ) duas_vezes = true;
    	  		else duas_vezes = false;
 
-            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-            tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+            tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
             inicializa_posicao(pos_final_i, pos_final_j);
-            nJogadas++;
+            incremento_nJogadas();
             return true;
          }
       }
 
-      else if( pos_final_i==pos_atual_i+2 && pos_atual_j==pos_final_j && nJogadas==0)
+      else if( pos_final_i==get_linha_atual()+2 && get_coluna_atual()==pos_final_j && getNJogadas()==0)
       {
-         if(peca_no_caminho(pos_atual_i,pos_atual_j, pos_final_i, pos_final_j, tabuleiro) == 0)
+         if(peca_no_caminho(get_linha_atual(),get_coluna_atual(), pos_final_i, pos_final_j, tabuleiro) == 0)
          {
-         	if( abs(pos_final_i-pos_atual_i) == 2 ) duas_vezes = true;
+         	if( abs(pos_final_i-get_linha_atual()) == 2 ) duas_vezes = true;
    	  		else duas_vezes = false;
 
-            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-            tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+            tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
             inicializa_posicao(pos_final_i, pos_final_j);
-            nJogadas++;
+            incremento_nJogadas();
             return true;
          }
       }
@@ -69,32 +62,32 @@ bool Peao::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabulei
    //PECAS BRANCAS
    else if(cor == 'B')
    {
-      if( pos_final_i==pos_atual_i-1 && pos_atual_j==pos_final_j )
+      if( pos_final_i==get_linha_atual()-1 && get_coluna_atual()==pos_final_j )
       {
-         if(peca_no_caminho(pos_atual_i,pos_atual_j, pos_final_i, pos_final_j, tabuleiro) == 0)
+         if(peca_no_caminho(get_linha_atual(),get_coluna_atual(), pos_final_i, pos_final_j, tabuleiro) == 0)
          {
-         	if( abs(pos_final_i-pos_atual_i) == 2 ) duas_vezes = true;
+         	if( abs(pos_final_i-get_linha_atual()) == 2 ) duas_vezes = true;
    	  		else duas_vezes = false;
 
-            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-            tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+            tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
             inicializa_posicao(pos_final_i, pos_final_j);
-            nJogadas++;
+            incremento_nJogadas();
             return true;
          }
       }
 
-      else if( pos_final_i==pos_atual_i-2 && pos_atual_j==pos_final_j && nJogadas==0)
+      else if( pos_final_i==get_linha_atual()-2 && get_coluna_atual()==pos_final_j && getNJogadas()==0)
       {
-         if(peca_no_caminho(pos_atual_i,pos_atual_j, pos_final_i, pos_final_j, tabuleiro) == 0)
+         if(peca_no_caminho(get_linha_atual(),get_coluna_atual(), pos_final_i, pos_final_j, tabuleiro) == 0)
          {
-         	if( abs(pos_final_i-pos_atual_i) == 2 ) duas_vezes = true;
+         	if( abs(pos_final_i-get_linha_atual()) == 2 ) duas_vezes = true;
    	  		else duas_vezes = false;
    	  		
-            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(pos_atual_i, pos_atual_j));
-            tabuleiro->setMatriz(pos_atual_i, pos_atual_j, "0");
+            tabuleiro->setMatriz(pos_final_i, pos_final_j, tabuleiro->getMatriz(get_linha_atual(), get_coluna_atual()));
+            tabuleiro->setMatriz(get_linha_atual(), get_coluna_atual(), "0");
             inicializa_posicao(pos_final_i, pos_final_j);
-            nJogadas++;
+            incremento_nJogadas();
             return true;
          }
       }
@@ -103,20 +96,6 @@ bool Peao::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabulei
    return false;
 }
 
-int Peao::getNJogadas(void)
-{
-   return nJogadas;
-}
-
-int Peao::posicao_inicial_i(void)
-{
-   return pos_atual_i;
-}
-
-int Peao::posicao_inicial_j(void)
-{
-   return pos_atual_j;
-}
 
 int Peao::peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro)
 {

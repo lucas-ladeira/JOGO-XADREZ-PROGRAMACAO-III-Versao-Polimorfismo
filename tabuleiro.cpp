@@ -136,115 +136,16 @@ bool Tabuleiro::jogada(const std::string& nome_peca, int pos_i_final, int pos_j_
 	return false;
 }
 
-/*
-// MOVIMENTO EN_PASSANT
-bool Tabuleiro::en_passant( int pos_final_i, int pos_final_j )
-{
-   if( getMatriz( peao.posicao_inicial_i(), pos_final_j )=="0" )
-   {
-      return false;
-   }
-
-   std::string nome_peca = getMatriz( peao.posicao_inicial_i(), peao.posicao_inicial_j() );
-   char tipo = nome_peca[0];
-   nome_peca = getMatriz( peao.posicao_inicial_i(), pos_final_j );
-   char tipo_enemy = nome_peca[0];
-
-   char cor = getMatriz( peao.posicao_inicial_i(), peao.posicao_inicial_j() ).back();
-   char cor_enemy = getMatriz( peao.posicao_inicial_i(), pos_final_j ).back();
-
-   if( tipo!='P' || tipo_enemy!='P' || abs(pos_final_i-peao.posicao_inicial_i())!=1 || abs(pos_final_j-peao.posicao_inicial_j())!=1 || getMatriz(pos_final_i, pos_final_j)!="0" )
-   {
-      return false;
-   }
-
-   int numero = nome_peca[1] - '1';
-
-   //BRANCA CAPTURA
-   if(cor=='B')
-   {
-      if( cor_enemy!=cor && pos_final_i==peao.posicao_inicial_i()-1 && _peoes_pretos[numero].getNJogadas()==1 && mov_anterior(getHistoricoJogadas(), getMatriz(_peoes_pretos[numero].posicao_inicial_i(),_peoes_pretos[numero].posicao_inicial_j()))) )
-      {
-         setMatriz(pos_final_i, pos_final_j, getMatriz(peao.posicao_inicial_i(), peao.posicao_inicial_j()));
-         setMatriz(peao.posicao_inicial_i(), peao.posicao_inicial_j(), "0");
-         setMatriz(peao.posicao_inicial_i(),pos_final_j, "0");
-
-         peao->inicializa_posicao(pos_final_i, pos_final_j);
-         peao->setNJogadas();
-         return true;
-      }
-   }
-
-   //PRETA CAPTURA
-   else if(cor=='P')
-   {
-      if( cor_enemy!=cor && pos_final_i==peao.posicao_inicial_i()+1 && _peoes_brancos[numero].getNJogadas()==1 && mov_anterior(getHistoricoJogadas(), getMatriz(_peoes_brancos[numero].posicao_inicial_i(),_peoes_brancos[numero].posicao_inicial_j())) )
-      {
-         setMatriz(pos_final_i, pos_final_j, getMatriz(peao.posicao_inicial_i(), peao.posicao_inicial_j()));
-         setMatriz(peao.posicao_inicial_i(), peao.posicao_inicial_j(), "0");
-         setMatriz(peao.posicao_inicial_i(),pos_final_j, "0");
-
-         peao.inicializa_posicao(pos_final_i, pos_final_j);
-         peao.setNJogadas();
-         return true;
-      }
-   }
-   return false;
-}
-
-bool Tabuleiro::mov_anterior(std::vector<std::string> v, std::string peao)
-{
-   std::string ultima_jogada = v[v.size()-1];
-
-	char tipo, numero, cor;
-	if( islower(ultima_jogada[0]) )
-	{
-		tipo = 'P';
-	}
-	else
-	{
-		return false;
-	}
-	if( (v.size()-1)%2==0 )
-	{
-		cor = 'B';
-	}
-	else
-	{
-		cor = 'P';
-	}
-	numero = char('1' + switch_para_letra(ultima_jogada[0]));
-
-	std::string pawn_enemy = tipo + numero + cor;
-
-   if( piece[0] == 'P' )
-   {
-      if(peao == pawn_enemy)
-      {
-         return true;
-      }
-      else
-      {
-         return false;
-      }
-   }
-   else
-   {
-      return false;
-   }
-}
-*/
-
 // ROQUE MAIOR E ROQUE MENOR
 bool Tabuleiro :: roque(int pos_final_i, int pos_final_j, char ){
-	if(_rei_branco.getNjogadas() == 0 && pos_final_i == 7 && pos_final_j == 6 && getMatriz(7, 5) == "0" && getMatriz(7, 6) == "0" && _rei_branco.getNjogadas() == 0 ){//roque menor pecas branca
+	if(_rei_branco.getNJogadas() == 0 && pos_final_i == 7 && pos_final_j == 6 && getMatriz(7, 5) == "0" && getMatriz(7, 6) == "0" && _rei_branco.getNJogadas() == 0 ){//roque menor pecas branca
 		if((xeque_RB( 7, 4))==true|| (xeque_RB( 7, 6))== true)return false;
 		if((xeque_RP(0,4))==true|| (xeque_RP(0,6))== true)return false;
 		//std::cout<< "ROQUE MENOR BRANCAS";
-		setMatriz(pos_final_i, pos_final_j, getMatriz(_rei_branco.posicao_inicial_i(), _rei_branco.posicao_inicial_j()));
-		setMatriz(_rei_branco.posicao_inicial_i(), _rei_branco.posicao_inicial_j(), "0");
+		setMatriz(pos_final_i, pos_final_j, getMatriz(_rei_branco.get_linha_atual(), _rei_branco.get_coluna_atual()));
+		setMatriz(_rei_branco.get_linha_atual(), _rei_branco.get_coluna_atual(), "0");
 		_rei_branco.inicializa_posicao(pos_final_i, pos_final_j);
-		_rei_branco.getNjogadas() ;
+		_rei_branco.getNJogadas() ;
 		//movimento torre
 		setMatriz(7, 5, getMatriz(7, 7));
 		setMatriz(7, 7, "0");
@@ -253,12 +154,12 @@ bool Tabuleiro :: roque(int pos_final_i, int pos_final_j, char ){
 		return true;
 	}
 
-	if(_rei_branco.getNjogadas() == 0 && pos_final_i == 7 && pos_final_j == 2 && getMatriz(7, 1) == "0" && getMatriz(7,2) == "0" && getMatriz(7, 3) == "0" && _torres_brancas[1].getNjogadas() == 0) {//roque maior branco
+	if(_rei_branco.getNJogadas() == 0 && pos_final_i == 7 && pos_final_j == 2 && getMatriz(7, 1) == "0" && getMatriz(7,2) == "0" && getMatriz(7, 3) == "0" && _torres_brancas[1].getNJogadas() == 0) {//roque maior branco
 		if((xeque_RB( 7, 4))==true|| (xeque_RB( 7, 2))== true)return false;
-		setMatriz(pos_final_i, pos_final_j,getMatriz(_rei_branco.posicao_inicial_i(), _rei_branco.posicao_inicial_j()));
-		setMatriz(_rei_branco.posicao_inicial_i(), _rei_branco.posicao_inicial_j(), "0");
+		setMatriz(pos_final_i, pos_final_j,getMatriz(_rei_branco.get_linha_atual(), _rei_branco.get_coluna_atual()));
+		setMatriz(_rei_branco.get_linha_atual(), _rei_branco.get_coluna_atual(), "0");
 		_rei_branco.inicializa_posicao(7, 2);
-		_rei_branco.getNjogadas() ;
+		_rei_branco.getNJogadas() ;
 		//movimento torre
 		setMatriz(7, 3,getMatriz(7, 0));
 		setMatriz(7, 0, "0");
@@ -268,11 +169,11 @@ bool Tabuleiro :: roque(int pos_final_i, int pos_final_j, char ){
 	}
 
 
-	if(_rei_preto.getNjogadas() == 0 && pos_final_i == 0 && pos_final_j == 6 && getMatriz(0, 5) == "0" && getMatriz(0, 6) == "0" && _torres_pretas[0].getNjogadas() == 0) {//roque menor pecas branca
+	if(_rei_preto.getNJogadas() == 0 && pos_final_i == 0 && pos_final_j == 6 && getMatriz(0, 5) == "0" && getMatriz(0, 6) == "0" && _torres_pretas[0].getNJogadas() == 0) {//roque menor pecas branca
 		//std::cout<< "ROQUE MENOR pretas";
 		if((xeque_RP(0,4))==true|| (xeque_RP(0,6))== true)return false;
-		setMatriz(pos_final_i, pos_final_j, getMatriz(_rei_preto.posicao_inicial_i(), _rei_preto.posicao_inicial_j()));
-		setMatriz(_rei_preto.posicao_inicial_i(), _rei_preto.posicao_inicial_j(), "0");
+		setMatriz(pos_final_i, pos_final_j, getMatriz(_rei_preto.get_linha_atual(), _rei_preto.get_coluna_atual()));
+		setMatriz(_rei_preto.get_linha_atual(), _rei_preto.get_coluna_atual(), "0");
 		_rei_preto.inicializa_posicao(pos_final_i, pos_final_j);
 		_rei_preto.setNjogadas();
 		//TORRE
@@ -284,13 +185,13 @@ bool Tabuleiro :: roque(int pos_final_i, int pos_final_j, char ){
 	}
 
 
-	if(_rei_preto.getNjogadas() == 0 && pos_final_i == 0 && pos_final_j == 2 && getMatriz(0, 1) == "0" && getMatriz(0,2) == "0" && getMatriz(0, 3) == "0" && _torres_pretas[1].getNjogadas() == 0) {//roque maior pecas bramcas
+	if(_rei_preto.getNJogadas() == 0 && pos_final_i == 0 && pos_final_j == 2 && getMatriz(0, 1) == "0" && getMatriz(0,2) == "0" && getMatriz(0, 3) == "0" && _torres_pretas[1].getNJogadas() == 0) {//roque maior pecas bramcas
 		//std::cout<< "ROQUE MaiOR PRETAS";
 		if((xeque_RP(0,4))==true|| (xeque_RP(0,2))== true)return false;
-		setMatriz(pos_final_i, pos_final_j, getMatriz(_rei_preto.posicao_inicial_i(), _rei_preto.posicao_inicial_j()));
-		setMatriz(_rei_preto.posicao_inicial_i(), _rei_preto.posicao_inicial_j(), "0");
+		setMatriz(pos_final_i, pos_final_j, getMatriz(_rei_preto.get_linha_atual(), _rei_preto.get_coluna_atual()));
+		setMatriz(_rei_preto.get_linha_atual(), _rei_preto.get_coluna_atual(), "0");
 		_rei_preto.inicializa_posicao(pos_final_i, pos_final_j);
-		_torres_pretas[1].getNjogadas() ;
+		_torres_pretas[1].getNJogadas() ;
 		setMatriz(0, 3, getMatriz(0, 0));
 		setMatriz(0, 0, "0");
 		_torres_pretas[0].inicializa_posicao(0, 3);

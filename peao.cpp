@@ -100,7 +100,7 @@ bool Peao::verifica_jogada( int pos_final_i, int pos_final_j, Tabuleiro *tabulei
 int Peao::peca_no_caminho(int pos_atual_i, int pos_atual_j, int pos_final_i, int pos_final_j, Tabuleiro *tabuleiro)
 {
    int x = pos_atual_j;
-   int y = pos_atual_i;
+   volatile int y = pos_atual_i;
 
    int valor;
    if(pos_final_i > y) valor = 1;

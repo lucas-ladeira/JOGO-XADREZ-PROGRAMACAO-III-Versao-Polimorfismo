@@ -5,6 +5,7 @@
 #include <string.h>
 #include "tabuleiro.h"
 
+void impressao(const Tabuleiro &t);
 void impressao(const Tabuleiro &t)
 {
 

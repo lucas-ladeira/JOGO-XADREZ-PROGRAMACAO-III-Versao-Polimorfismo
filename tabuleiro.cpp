@@ -136,6 +136,7 @@ bool Tabuleiro::jogada(const std::string& nome_peca, int pos_i_final, int pos_j_
 			case 'D':
 				peca = &_rainha_preta;
                 break;
+             default: break;
 		}
 	}
 
@@ -162,6 +163,7 @@ bool Tabuleiro::jogada(const std::string& nome_peca, int pos_i_final, int pos_j_
 			case 'D':
 				peca = &_rainha_branca;
                 break;
+            default : break;
 		}
 	}
 

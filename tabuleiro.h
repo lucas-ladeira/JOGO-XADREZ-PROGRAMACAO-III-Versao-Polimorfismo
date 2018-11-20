@@ -45,6 +45,7 @@ public:
 				return 6;
 			case 'h':
 				return 7;
+			default: return -1;
 		}
 
 		return -1;
@@ -70,6 +71,8 @@ public:
 				return 1;
 			case '8':
 				return 0;
+
+			default: return -1;
 		}
 
 		return -1;
@@ -89,6 +92,7 @@ public:
 				return std::string("D");
 			case 'R':
 				return std::string("R");
+			default: return std::string ("erro");
 		}
 
 		return std::string("erro");

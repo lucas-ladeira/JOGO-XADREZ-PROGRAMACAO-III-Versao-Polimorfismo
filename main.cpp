@@ -23,7 +23,9 @@ std::string switch_char_string(char letra);
 int main( int argc, char *argv[] )
 {
 	// Parâmetros de entrada
-	bool tipo_leitura = via_terminal; //entrada manual ou por arquivo
+	bool tipo_leitura = via_terminal; //entrada manual ou por arquivo//entrada manual ou por arquivo
+	//static const bool printar_caracteres_especiais = true;
+
 
 	Tabuleiro t;
 
@@ -33,10 +35,12 @@ int main( int argc, char *argv[] )
 		std::vector<string> jogadas_times;
 		carrega_dados(jogadas_times, argv);
 
-		for(unsigned int i=0; i<jogadas_times.size(); i++)
+		int tamanho = jogadas_times.size();
+
+		for(int i=0; i < tamanho; i++)
 		{
 			impressao(t);
-			decodifica_main(t, jogadas_times[i], i);
+			decodifica_main(t, jogadas_times[std::size_t(i)],  i);
 		}
 		impressao(t);
 	}
@@ -192,6 +196,7 @@ int switch_para_letra(char letra)
 			return 6;
 		case 'h':
 			return 7;
+		default: return -1;
 	}
 
 	return -1;
@@ -217,6 +222,7 @@ int switch_para_numero(char numero)
 			return 1;
 		case '8':
 			return 0;
+		default: return -1;
 	}
 
 	return -1;
@@ -236,6 +242,7 @@ std::string switch_char_string(char letra)
 			return std::string("D");
 		case 'R':
 			return std::string("R");
+		default: return std::string ("erro");
 	}
 
 	return std::string("erro");;
